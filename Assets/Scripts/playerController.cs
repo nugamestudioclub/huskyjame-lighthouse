@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class playerController : MonoBehaviour
 {
-    // This class controls the player camera and the spawning in of
+    // This class controls the player camera and how the light works
     [Header("Parameters")]
     [SerializeField]
     float vertSensitivity;
@@ -18,11 +19,25 @@ public class playerController : MonoBehaviour
     [SerializeField]
     float yUpperBound;
 
+    [SerializeField]
+    float adjustSpeed;
+
+    [SerializeField]
+    float adjustLock;
+
     [Header("Cache Variables")]
     [SerializeField]
     Camera mainCam;
 
+    [SerializeField]
+    GameObject lightObject;
+
+    [SerializeField]
+    GameObject lightIndicator;
+
     [Header("State Variables")]
+    [SerializeField]
+    bool lightBeamed;
     [SerializeField]
     float vert;
     [SerializeField]
@@ -47,5 +62,39 @@ public class playerController : MonoBehaviour
         vert = vertAngle;
         hor = horAngle;
         gameObject.transform.rotation = Quaternion.Euler(new Vector3(vert + 90, hor, gameObject.transform.rotation.eulerAngles.z));
+
+        print(Input.GetAxis("BeamRay"));
+        if(Input.GetAxis("BeamRay") != 0)
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (lightBeamed)
+                {
+                    Vector3 diff = hit.point - lightIndicator.transform.position;
+                    lightIndicator.transform.position += diff.normalized * Time.deltaTime * adjustSpeed;
+                    if(diff.magnitude <= adjustLock)
+                    {
+                        lightIndicator.transform.position = hit.point;
+                    }
+                    Vector3 dir = lightIndicator.transform.position - lightObject.transform.position;
+                    lightObject.transform.rotation = Quaternion.LookRotation(dir.normalized, dir.normalized);
+                }
+                else
+                {
+                    lightIndicator.SetActive(true);
+                    lightObject.SetActive(true);
+                    lightBeamed = true;
+                    lightIndicator.transform.position = hit.point;
+                }
+            }
+        }
+        else
+        {
+            lightBeamed = false;
+            lightIndicator.SetActive(false);
+            lightObject.SetActive(false);
+        }
     }
 }
