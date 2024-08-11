@@ -25,6 +25,9 @@ public class playerController : MonoBehaviour
     [SerializeField]
     float adjustLock;
 
+    [SerializeField]
+    public static float shineSize = (float)4.5;
+
     [Header("Cache Variables")]
     [SerializeField]
     Camera mainCam;
@@ -62,8 +65,6 @@ public class playerController : MonoBehaviour
         vert = vertAngle;
         hor = horAngle;
         gameObject.transform.rotation = Quaternion.Euler(new Vector3(vert + 90, hor, gameObject.transform.rotation.eulerAngles.z));
-
-        print(Input.GetAxis("BeamRay"));
         if(Input.GetAxis("BeamRay") != 0)
         {
             RaycastHit hit;
@@ -83,7 +84,7 @@ public class playerController : MonoBehaviour
                 }
                 else
                 {
-                    lightIndicator.SetActive(true);
+                    lightIndicator.transform.GetChild(0).gameObject.SetActive(true);
                     lightObject.SetActive(true);
                     lightBeamed = true;
                     lightIndicator.transform.position = hit.point;
@@ -93,7 +94,7 @@ public class playerController : MonoBehaviour
         else
         {
             lightBeamed = false;
-            lightIndicator.SetActive(false);
+            lightIndicator.transform.GetChild(0).gameObject.SetActive(false);
             lightObject.SetActive(false);
         }
     }

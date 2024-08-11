@@ -16,6 +16,8 @@ public class ShipController : MonoBehaviour
     [SerializeField]
     float turnRate;
     [SerializeField]
+    float turnAccel;
+    [SerializeField]
     float activeTurnRate;
     // Distance that ship sees beam from
     [SerializeField]
@@ -30,6 +32,8 @@ public class ShipController : MonoBehaviour
     [SerializeField]
     float minDistanceAway;
     [SerializeField]
+    float sinkSpeed;
+    [SerializeField]
     float sinkTime;
     [SerializeField]
     float angleOffSet;
@@ -39,17 +43,25 @@ public class ShipController : MonoBehaviour
     GameObject lightHouse;
     [SerializeField]
     GameObject lightBeam;
+    [SerializeField]
+    ShipSilhouetteTrigger[] silhouetteTriggers;
 
     [Header("State Variables")]
     [SerializeField]
     float currentAngle;
-    enum boatState{
+    public enum boatState{
         WANDER,
         FOLLOW,
         SINK
     }
     [SerializeField]
-    boatState currentState = boatState.WANDER;
+    public boatState currentState = boatState.WANDER;
+    [SerializeField]
+    float wanderTurnVel;
+
+    [Header("Debug indicators")]
+    [SerializeField]
+    float lightHouseDistance;
 
 
     // Start is called before the first frame update
@@ -133,47 +145,79 @@ public class ShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 beamDiff = lightBeam.transform.position - gameObject.transform.position;
-        beamDiff.y = 0;
-        if (currentState == boatState.WANDER)
+        if(currentState != boatState.SINK)
         {
-            Vector3 lightHouseDiff = lightBeam.transform.position - gameObject.transform.position;
-            lightHouseDiff.y = 0;
-            if (lightHouseDiff.magnitude >= maxDistanceAway)
+            Vector3 beamDiff = lightBeam.transform.position - gameObject.transform.position;
+            beamDiff.y = 0;
+            if (lightBeam.transform.GetChild(0).transform.gameObject.activeInHierarchy && beamDiff.magnitude <= playerController.shineSize)
             {
-                moveTowards(lightHouse.transform.position);
-            }
-            else if(lightHouseDiff.magnitude <= minDistanceAway)
-            {
-                moveAway(lightHouse.transform.position);
+                for(int i = 0; i < silhouetteTriggers.Length; i++)
+                {
+                    silhouetteTriggers[i].triggerClear();
+                }
             }
             else
             {
-                currentAngle += Time.deltaTime * Random.Range(-turnRate, turnRate);
+                for (int i = 0; i < silhouetteTriggers.Length; i++)
+                {
+                    silhouetteTriggers[i].triggerSilhouette();
+                }
             }
-            if (lightBeam.activeInHierarchy && beamDiff.magnitude <= beamSightDistance)
+            if (currentState == boatState.WANDER)
             {
-                currentState = boatState.FOLLOW ;
+                Vector3 lightHouseDiff = lightHouse.transform.position - gameObject.transform.position;
+                lightHouseDiff.y = 0;
+                lightHouseDistance = lightHouseDiff.magnitude;
+                if (lightHouseDiff.magnitude >= maxDistanceAway)
+                {
+                    moveTowards(lightHouse.transform.position);
+                }
+                else if (lightHouseDiff.magnitude <= minDistanceAway)
+                {
+                    moveAway(lightHouse.transform.position);
+                }
+                else
+                {
+                    wanderTurnVel = Mathf.Clamp(wanderTurnVel + Time.deltaTime * Random.Range(-turnAccel, turnAccel), -turnRate, turnRate);
+                    currentAngle += Time.deltaTime * wanderTurnVel;
+                }
+                if (lightBeam.transform.GetChild(0).transform.gameObject.activeInHierarchy && beamDiff.magnitude <= beamSightDistance)
+                {
+                    currentState = boatState.FOLLOW;
+                }
             }
+            else if (currentState == boatState.FOLLOW)
+            {
+                if (!lightBeam.transform.GetChild(0).transform.gameObject.activeInHierarchy || beamDiff.magnitude >= beamBreakDistance)
+                {
+                    currentState = boatState.WANDER;
+                }
+                else if (MonsterController.inLight)
+                {
+                    moveAway(lightBeam.transform.position);
+                }
+                else
+                {
+                    moveTowards(lightBeam.transform.position);
+                }
+            }
+            float zMove = Mathf.Sin(Mathf.Deg2Rad * currentAngle) * speed * Time.deltaTime;
+            float xMove = Mathf.Cos(Mathf.Deg2Rad * currentAngle) * speed * Time.deltaTime;
+            gameObject.transform.position += new Vector3(xMove, 0, zMove);
+            transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, -currentAngle + angleOffSet, transform.rotation.eulerAngles.z));
         }
-        else if(currentState == boatState.FOLLOW)
+        else
         {
-            if (!lightBeam.activeInHierarchy || beamDiff.magnitude >= beamBreakDistance)
+            for (int i = 0; i < silhouetteTriggers.Length; i++)
             {
-                currentState = boatState.WANDER;
+                silhouetteTriggers[i].triggerClear();
             }
-            else if(MonsterController.inLight)
+            sinkTime -= Time.deltaTime;
+            gameObject.transform.position += sinkSpeed * Vector3.down * Time.deltaTime;
+            if(sinkTime <= 0)
             {
-                moveAway(lightBeam.transform.position);
-            }
-            else
-            {
-                moveTowards(lightBeam.transform.position);
+                Destroy(gameObject);
             }
         }
-        float zMove = Mathf.Sin(Mathf.Deg2Rad * currentAngle) * speed * Time.deltaTime;
-        float xMove = Mathf.Cos(Mathf.Deg2Rad * currentAngle) * speed * Time.deltaTime;
-        gameObject.transform.position += new Vector3(xMove, 0, zMove);
-        transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, -currentAngle + angleOffSet, transform.rotation.eulerAngles.z));
     }
 }
