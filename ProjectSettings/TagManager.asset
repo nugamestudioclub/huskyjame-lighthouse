@@ -7,6 +7,8 @@ TagManager:
   - LightHouse
   - Beam
   - Ship
+  - Scare
+  - Island
   layers:
   - Default
   - TransparentFX

@@ -32,6 +32,8 @@ public class MonsterController : MonoBehaviour
     float diveSpeed;
     [SerializeField]
     float angleAdjust;
+    [SerializeField]
+    float distanceUntilDespawn;
 
     [Header("Cache Variables")]
     [SerializeField]
@@ -47,7 +49,7 @@ public class MonsterController : MonoBehaviour
     [SerializeField]
     GhostShipController lockedOnGhostShip;
     [SerializeField]
-    float directionFloat;
+    public float directionFloat;
     [SerializeField]
     float lightUntilDiveLeft = 0;
     enum monsterState
@@ -62,6 +64,7 @@ public class MonsterController : MonoBehaviour
     
 
     public static bool inLight;
+    public static HashSet<MonsterController> inLightList = new HashSet<MonsterController>();
     // Start is called before the first frame update
     void Awake()
     {
@@ -72,6 +75,25 @@ public class MonsterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentState == monsterState.SHINE)
+        {
+            if (!inLightList.Contains(this))
+            {
+                inLightList.Add(this);
+                inLight = true;
+            }
+        }
+        else
+        {
+            if (inLightList.Contains(this))
+            {
+                inLightList.Remove(this);
+                if(inLightList.Count == 0)
+                {
+                    inLight = false;
+                }
+            }
+        }
         if(currentState == monsterState.DIVE)
         {
             diveTime -= Time.deltaTime;
@@ -135,44 +157,66 @@ public class MonsterController : MonoBehaviour
             }
             else if(currentState == monsterState.CHASE)
             {
-                Vector3 diff = lockedOnObject.transform.position - gameObject.transform.position;
-                currentAngle = Mathf.Atan2(diff.z, diff.x) * Mathf.Rad2Deg;
-                currentSpeed = activeSpeed;
-                if(lockedOnShip != null)
+                if(lockedOnObject == null)
                 {
-                    if (lockedOnShip.currentState == ShipController.boatState.SINK || diff.magnitude >= distanceUntilBreak)
-                    {
-                        currentState = monsterState.WANDER;
-                    }
-                    else if(diff.magnitude <= distanceUntilAttack)
-                    {
-                        lockedOnShip.currentState = ShipController.boatState.SINK;
-                        animateControl.SetTrigger("Attack");
-                        currentState = monsterState.WANDER;
-                    }
-                }
-                else if(lockedOnGhostShip != null)
-                {
-                    if (lockedOnGhostShip.currentState == GhostShipController.boatState.SINK || diff.magnitude >= distanceUntilBreak)
-                    {
-                        currentState = monsterState.WANDER;
-                    }
-                    else if (diff.magnitude <= distanceUntilAttack)
-                    {
-                        lockedOnGhostShip.currentState = GhostShipController.boatState.SINK;
-                        animateControl.SetTrigger("Attack");
-                        currentState = monsterState.WANDER;
-                    }
+                    currentState = monsterState.WANDER;
                 }
                 else
                 {
-                    currentState = monsterState.WANDER;
+                    Vector3 diff = lockedOnObject.transform.position - gameObject.transform.position;
+                    currentAngle = Mathf.Atan2(diff.z, diff.x) * Mathf.Rad2Deg;
+                    currentSpeed = activeSpeed;
+                    if (lockedOnShip != null)
+                    {
+                        if (lockedOnShip.currentState == ShipController.boatState.SINK || diff.magnitude >= distanceUntilBreak)
+                        {
+                            currentState = monsterState.WANDER;
+                        }
+                        else if (diff.magnitude <= distanceUntilAttack)
+                        {
+                            lockedOnShip.currentState = ShipController.boatState.SINK;
+                            animateControl.SetTrigger("Attack");
+                            currentState = monsterState.WANDER;
+                        }
+                    }
+                    else if (lockedOnGhostShip != null)
+                    {
+                        if (lockedOnGhostShip.currentState == GhostShipController.boatState.SINK || diff.magnitude >= distanceUntilBreak)
+                        {
+                            currentState = monsterState.WANDER;
+                        }
+                        else if (diff.magnitude <= distanceUntilAttack)
+                        {
+                            lockedOnGhostShip.currentState = GhostShipController.boatState.SINK;
+                            animateControl.SetTrigger("Attack");
+                            currentState = monsterState.WANDER;
+                        }
+                    }
+                    else
+                    {
+                        currentState = monsterState.WANDER;
+                    }
                 }
             }
             float zMove = Mathf.Sin(Mathf.Deg2Rad * currentAngle) * currentSpeed * Time.deltaTime;
             float xMove = Mathf.Cos(Mathf.Deg2Rad * currentAngle) * currentSpeed * Time.deltaTime;
             gameObject.transform.position += new Vector3(xMove, 0, zMove);
             transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, -currentAngle + angleAdjust, transform.rotation.eulerAngles.z));
+        }
+        Vector3 disFromCent = gameObject.transform.position;
+        disFromCent.y = 0;
+        float dist = disFromCent.magnitude;
+        if(dist >= distanceUntilDespawn)
+        {
+            if (inLightList.Contains(this))
+            {
+                inLightList.Remove(this);
+                if (inLightList.Count == 0)
+                {
+                    inLight = false;
+                }
+            }
+            Destroy(gameObject);
         }
     }
 }

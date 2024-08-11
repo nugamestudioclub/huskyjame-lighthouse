@@ -38,11 +38,16 @@ public class GhostShipController : MonoBehaviour
     float sinkTime;
     [SerializeField]
     float angleOffSet;
+    [SerializeField]
+    float distanceUntilLand;
 
     // >>> Ghost ship parameters <<<
     // How far away
     [SerializeField]
     float angleOutUntilInvade;
+
+    [SerializeField]
+    float distanceToLight;
 
     [Header("Cache Variables")]
     [SerializeField]
@@ -51,6 +56,8 @@ public class GhostShipController : MonoBehaviour
     GameObject lightBeam;
     [SerializeField]
     ShipSilhouetteTrigger[] silhouetteTriggers;
+    [SerializeField]
+    GameObject[] islands;
 
     [Header("State Variables")]
     [SerializeField]
@@ -78,6 +85,7 @@ public class GhostShipController : MonoBehaviour
     {
         lightHouse = GameObject.FindGameObjectWithTag("LightHouse");
         lightBeam = GameObject.FindGameObjectWithTag("Beam");
+        islands = GameObject.FindGameObjectsWithTag("Island");
     }
 
     // Flattens angle to be from 0-359
@@ -253,6 +261,22 @@ public class GhostShipController : MonoBehaviour
             gameObject.transform.position += sinkSpeed * Vector3.down * Time.deltaTime;
             if (sinkTime <= 0)
             {
+                Destroy(gameObject);
+            }
+        }
+        Vector3 lightHouseDiffOut = lightHouse.transform.position - gameObject.transform.position;
+        lightHouseDiffOut.y = 0;
+        if(lightHouseDiffOut.magnitude <= distanceToLight)
+        {
+            SpawnBehavior.instance.scared = true;
+        }
+        for(int i = 0; i < islands.Length; i++)
+        {
+            Vector3 difference = islands[i].transform.position - gameObject.transform.position;
+            difference.y = 0;
+            if(difference.magnitude <= distanceUntilLand)
+            {
+                SpawnBehavior.shipsCounted -= 1;
                 Destroy(gameObject);
             }
         }

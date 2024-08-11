@@ -37,6 +37,8 @@ public class ShipController : MonoBehaviour
     float sinkTime;
     [SerializeField]
     float angleOffSet;
+    [SerializeField]
+    float distanceUntilLand;
 
     [Header("Cache Variables")]
     [SerializeField]
@@ -45,6 +47,8 @@ public class ShipController : MonoBehaviour
     GameObject lightBeam;
     [SerializeField]
     ShipSilhouetteTrigger[] silhouetteTriggers;
+    [SerializeField]
+    GameObject[] islands;
 
     [Header("State Variables")]
     [SerializeField]
@@ -69,6 +73,7 @@ public class ShipController : MonoBehaviour
     {
         lightHouse = GameObject.FindGameObjectWithTag("LightHouse");
         lightBeam = GameObject.FindGameObjectWithTag("Beam");
+        islands = GameObject.FindGameObjectsWithTag("Island");
     }
 
     // Flattens angle to be from 0-359
@@ -216,6 +221,16 @@ public class ShipController : MonoBehaviour
             gameObject.transform.position += sinkSpeed * Vector3.down * Time.deltaTime;
             if(sinkTime <= 0)
             {
+                Destroy(gameObject);
+            }
+        }
+        for (int i = 0; i < islands.Length; i++)
+        {
+            Vector3 difference = islands[i].transform.position - gameObject.transform.position;
+            difference.y = 0;
+            if (difference.magnitude <= distanceUntilLand)
+            {
+                SpawnBehavior.shipsCounted += 1;
                 Destroy(gameObject);
             }
         }
