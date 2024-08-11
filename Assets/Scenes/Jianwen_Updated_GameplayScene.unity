@@ -612,6 +612,46 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0.025
   m_ShadowAngle: 0
+--- !u!1 &245555466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 245555467}
+  m_Layer: 0
+  m_Name: Fog
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &245555467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245555466}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -38.304955, y: 11.038048, z: 7.200001}
+  m_LocalScale: {x: 1, y: -0.5963, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1589390040}
+  - {fileID: 833333085}
+  - {fileID: 911780050}
+  - {fileID: 1024587590}
+  - {fileID: 1821925645}
+  - {fileID: 1951414074}
+  - {fileID: 1123287229}
+  - {fileID: 1913723772}
+  - {fileID: 1642115596}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &276575135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -767,7 +807,7 @@ GameObject:
   - component: {fileID: 390114160}
   m_Layer: 0
   m_Name: Indicator ball
-  m_TagString: Untagged
+  m_TagString: Beam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1048,7 +1088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Intensity: 1
+  m_Intensity: 0.4
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
   m_InnerSpotPercent: 0
@@ -1170,7 +1210,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.4
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1283,7 +1323,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 657561668}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1890,6 +1930,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 737697274}
+  - component: {fileID: 737697275}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -1913,11 +1954,104 @@ Transform:
   - {fileID: 49846224}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &737697275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737697273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7387f420c1c8445aea27082e0a3a6f80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
+  turnRate: 20
+  activeTurnRate: 40
+  beamSightDistance: 10
+  beamBreakDistance: 15
+  maxDistanceAway: 30
+  minDistanceAway: 10
+  sinkTime: 3
+  angleOffSet: 0
+  lightHouse: {fileID: 0}
+  lightBeam: {fileID: 0}
+  currentAngle: 0
+  currentState: 0
 --- !u!4 &782628378 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5030129961454404441, guid: 320d9fa3ef005e64594e1ebb0326cb0b, type: 3}
   m_PrefabInstance: {fileID: 1640816475}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &833333083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 833333085}
+  - component: {fileID: 833333084}
+  m_Layer: 0
+  m_Name: Fog Controller (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &833333084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833333083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1fbb15bf92b84f40a1eb030765b5afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters:
+    albedo: {r: 0, g: 0.026174437, b: 0.3018868, a: 1}
+    meanFreePath: 5
+    blendingMode: 1
+    priority: 0
+    anisotropy: 0
+    volumeMask: {fileID: 0}
+    textureScrollingSpeed: {x: 0, y: 0, z: 0}
+    textureTiling: {x: 1, y: 1, z: 1}
+    positiveFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    negativeFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    m_EditorUniformFade: 4
+    m_EditorPositiveFade: {x: 0.005584723, y: 0.002926026, z: 0.0017428024}
+    m_EditorNegativeFade: {x: 0.005584723, y: 0.002926026, z: 0.0017428024}
+    m_EditorAdvancedFade: 0
+    size: {x: 16.214935, y: 38.798225, z: 57.37883}
+    invertFade: 0
+    distanceFadeStart: 10000
+    distanceFadeEnd: 10000
+    textureOffset: {x: 0, y: 0, z: 0}
+    falloffMode: 0
+    maskMode: 0
+    materialMask: {fileID: 0}
+  m_Version: 2
+--- !u!4 &833333085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833333083}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.33993548, z: 0, w: 0.94044876}
+  m_LocalPosition: {x: 8.0930805, y: 3.8837047, z: -26.888266}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 245555467}
+  m_LocalEulerAnglesHint: {x: 0, y: -39.746, z: 0}
 --- !u!1 &834556465
 GameObject:
   m_ObjectHideFlags: 0
@@ -2139,6 +2273,74 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 892172047}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &911780048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 911780050}
+  - component: {fileID: 911780049}
+  m_Layer: 0
+  m_Name: Fog Controller (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &911780049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911780048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1fbb15bf92b84f40a1eb030765b5afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters:
+    albedo: {r: 0, g: 0.026174437, b: 0.3018868, a: 1}
+    meanFreePath: 5
+    blendingMode: 1
+    priority: 0
+    anisotropy: 0
+    volumeMask: {fileID: 0}
+    textureScrollingSpeed: {x: 0, y: 0, z: 0}
+    textureTiling: {x: 1, y: 1, z: 1}
+    positiveFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    negativeFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    m_EditorUniformFade: 4
+    m_EditorPositiveFade: {x: 0.005584723, y: 0.0037352925, z: 0.002230535}
+    m_EditorNegativeFade: {x: 0.005584723, y: 0.0037352925, z: 0.002230535}
+    m_EditorAdvancedFade: 0
+    size: {x: 16.214935, y: 30.39243, z: 44.832253}
+    invertFade: 0
+    distanceFadeStart: 10000
+    distanceFadeEnd: 10000
+    textureOffset: {x: 0, y: 0, z: 0}
+    falloffMode: 0
+    maskMode: 0
+    materialMask: {fileID: 0}
+  m_Version: 2
+--- !u!4 &911780050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911780048}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.33993548, z: 0, w: 0.94044876}
+  m_LocalPosition: {x: 76.64946, y: 10.932002, z: 29.23627}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 245555467}
+  m_LocalEulerAnglesHint: {x: 0, y: -39.746, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -2386,6 +2588,74 @@ MonoBehaviour:
   lightBeamed: 0
   vert: 0
   hor: 0
+--- !u!1 &1024587588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1024587590}
+  - component: {fileID: 1024587589}
+  m_Layer: 0
+  m_Name: Fog Controller (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1024587589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024587588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1fbb15bf92b84f40a1eb030765b5afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters:
+    albedo: {r: 0, g: 0.026174437, b: 0.3018868, a: 1}
+    meanFreePath: 5
+    blendingMode: 1
+    priority: 0
+    anisotropy: 0
+    volumeMask: {fileID: 0}
+    textureScrollingSpeed: {x: 0, y: 0, z: 0}
+    textureTiling: {x: 1, y: 1, z: 1}
+    positiveFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    negativeFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    m_EditorUniformFade: 4
+    m_EditorPositiveFade: {x: 0.005584723, y: 0.003074816, z: 0.002230535}
+    m_EditorNegativeFade: {x: 0.005584723, y: 0.003074816, z: 0.002230535}
+    m_EditorAdvancedFade: 0
+    size: {x: 16.214935, y: 36.92078, z: 44.832253}
+    invertFade: 0
+    distanceFadeStart: 10000
+    distanceFadeEnd: 10000
+    textureOffset: {x: 0, y: 0, z: 0}
+    falloffMode: 0
+    maskMode: 0
+    materialMask: {fileID: 0}
+  m_Version: 2
+--- !u!4 &1024587590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024587588}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.8958649, z: 0, w: 0.44432664}
+  m_LocalPosition: {x: 67.20509, y: 5.4579597, z: -37.900143}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 245555467}
+  m_LocalEulerAnglesHint: {x: 0, y: -127.239, z: 0}
 --- !u!1 &1062437769
 GameObject:
   m_ObjectHideFlags: 0
@@ -2499,7 +2769,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters:
-    albedo: {r: 1, g: 1, b: 1, a: 1}
+    albedo: {r: 0, g: 0.026174437, b: 0.3018868, a: 1}
     meanFreePath: 5
     blendingMode: 1
     priority: 0
@@ -2507,13 +2777,13 @@ MonoBehaviour:
     volumeMask: {fileID: 0}
     textureScrollingSpeed: {x: 0, y: 0, z: 0}
     textureTiling: {x: 1, y: 1, z: 1}
-    positiveFade: {x: 0.22338893, y: 0.13459797, z: 0.036720697}
-    negativeFade: {x: 0.22338893, y: 0.13459797, z: 0.036720697}
+    positiveFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    negativeFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
     m_EditorUniformFade: 4
-    m_EditorPositiveFade: {x: 0.0055847233, y: 0.0033153605, z: 0.000918017}
-    m_EditorNegativeFade: {x: 0.0055847233, y: 0.0033153605, z: 0.000918017}
+    m_EditorPositiveFade: {x: 0.0055847233, y: 0.001954548, z: 0.000918017}
+    m_EditorNegativeFade: {x: 0.0055847233, y: 0.001954548, z: 0.000918017}
     m_EditorAdvancedFade: 0
-    size: {x: 19.599022, y: 25.43285, z: 108.9304}
+    size: {x: 19.599022, y: 43.139927, z: 108.9304}
     invertFade: 0
     distanceFadeStart: 10000
     distanceFadeEnd: 10000
@@ -2531,11 +2801,11 @@ Transform:
   m_GameObject: {fileID: 1123287227}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.5999999, y: -0.32521057, z: 43.383553}
-  m_LocalScale: {x: 1, y: -0.5963, z: 1}
+  m_LocalPosition: {x: 38.904953, y: 4.208833, z: 36.184048}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 245555467}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1150129432
 GameObject:
@@ -3000,6 +3270,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6a80ae0ac20b5e644870f08645fb6297, type: 3}
+      propertyPath: m_TagString
+      value: LightHouse
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -5568371526223589888, guid: 6a80ae0ac20b5e644870f08645fb6297, type: 3}
@@ -3059,7 +3333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters:
-    albedo: {r: 1, g: 1, b: 1, a: 1}
+    albedo: {r: 0, g: 0.026174437, b: 0.3018868, a: 1}
     meanFreePath: 5
     blendingMode: 1
     priority: 0
@@ -3067,13 +3341,13 @@ MonoBehaviour:
     volumeMask: {fileID: 0}
     textureScrollingSpeed: {x: 0, y: 0, z: 0}
     textureTiling: {x: 1, y: 1, z: 1}
-    positiveFade: {x: 0.22338893, y: 0.13459797, z: 0.036720697}
-    negativeFade: {x: 0.22338893, y: 0.13459797, z: 0.036720697}
+    positiveFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    negativeFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
     m_EditorUniformFade: 4
-    m_EditorPositiveFade: {x: 0.005584723, y: 0.0037352925, z: 0.000918017}
-    m_EditorNegativeFade: {x: 0.005584723, y: 0.0037352925, z: 0.000918017}
+    m_EditorPositiveFade: {x: 0.005584723, y: 0.0026139722, z: 0.000918017}
+    m_EditorNegativeFade: {x: 0.005584723, y: 0.0026139722, z: 0.000918017}
     m_EditorAdvancedFade: 0
-    size: {x: 16.214935, y: 30.39243, z: 108.9304}
+    size: {x: 16.214935, y: 43.429924, z: 108.9304}
     invertFade: 0
     distanceFadeStart: 10000
     distanceFadeEnd: 10000
@@ -3090,12 +3364,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589390038}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -38.304955, y: 4.519295, z: 7.200001}
-  m_LocalScale: {x: 1, y: -0.5963, z: 1}
+  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 245555467}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1640816475
 PrefabInstance:
@@ -3108,6 +3382,10 @@ PrefabInstance:
     - target: {fileID: 4886409126056612044, guid: 320d9fa3ef005e64594e1ebb0326cb0b, type: 3}
       propertyPath: m_Name
       value: WaterLowPoly HDRP
+      objectReference: {fileID: 0}
+    - target: {fileID: 4886409126056612044, guid: 320d9fa3ef005e64594e1ebb0326cb0b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5030129961454404441, guid: 320d9fa3ef005e64594e1ebb0326cb0b, type: 3}
       propertyPath: m_LocalScale.x
@@ -3196,7 +3474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters:
-    albedo: {r: 1, g: 1, b: 1, a: 1}
+    albedo: {r: 0, g: 0.026174437, b: 0.3018868, a: 1}
     meanFreePath: 10
     blendingMode: 1
     priority: 0
@@ -3204,8 +3482,8 @@ MonoBehaviour:
     volumeMask: {fileID: 0}
     textureScrollingSpeed: {x: 0, y: 0, z: 0}
     textureTiling: {x: 1, y: 1, z: 1}
-    positiveFade: {x: 0, y: 0, z: 0}
-    negativeFade: {x: 0, y: 0, z: 0}
+    positiveFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    negativeFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
     m_EditorUniformFade: 0
     m_EditorPositiveFade: {x: 0.00093322987, y: 0, z: 0.000918017}
     m_EditorNegativeFade: {x: 0.00093322987, y: 0, z: 0.000918017}
@@ -3228,11 +3506,11 @@ Transform:
   m_GameObject: {fileID: 1642115594}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.39999396, y: 27.535769, z: 0.022325568}
-  m_LocalScale: {x: 1, y: -0.5963, z: 1}
+  m_LocalPosition: {x: 37.90496, y: -45.215412, z: -7.1776752}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 245555467}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1648952048
 GameObject:
@@ -3500,6 +3778,74 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1821925643
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1821925645}
+  - component: {fileID: 1821925644}
+  m_Layer: 0
+  m_Name: Fog Controller (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1821925644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821925643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1fbb15bf92b84f40a1eb030765b5afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameters:
+    albedo: {r: 0, g: 0.026174437, b: 0.3018868, a: 1}
+    meanFreePath: 5
+    blendingMode: 1
+    priority: 0
+    anisotropy: 0
+    volumeMask: {fileID: 0}
+    textureScrollingSpeed: {x: 0, y: 0, z: 0}
+    textureTiling: {x: 1, y: 1, z: 1}
+    positiveFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    negativeFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    m_EditorUniformFade: 4
+    m_EditorPositiveFade: {x: 0.005584723, y: 0.0028113285, z: 0.002230535}
+    m_EditorNegativeFade: {x: 0.005584723, y: 0.0028113285, z: 0.002230535}
+    m_EditorAdvancedFade: 0
+    size: {x: 16.214935, y: 40.381126, z: 44.832253}
+    invertFade: 0
+    distanceFadeStart: 10000
+    distanceFadeEnd: 10000
+    textureOffset: {x: 0, y: 0, z: 0}
+    falloffMode: 0
+    maskMode: 0
+    materialMask: {fileID: 0}
+  m_Version: 2
+--- !u!4 &1821925645
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821925643}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.8958649, z: 0, w: 0.44432664}
+  m_LocalPosition: {x: 8.304424, y: 2.5564213, z: 29.10062}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 245555467}
+  m_LocalEulerAnglesHint: {x: 0, y: -127.239, z: 0}
 --- !u!1001 &1829526035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3632,7 +3978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters:
-    albedo: {r: 1, g: 1, b: 1, a: 1}
+    albedo: {r: 0, g: 0.026174437, b: 0.3018868, a: 1}
     meanFreePath: 5
     blendingMode: 1
     priority: 0
@@ -3640,13 +3986,13 @@ MonoBehaviour:
     volumeMask: {fileID: 0}
     textureScrollingSpeed: {x: 0, y: 0, z: 0}
     textureTiling: {x: 1, y: 1, z: 1}
-    positiveFade: {x: 0.22338893, y: 0.13459797, z: 0.036720697}
-    negativeFade: {x: 0.22338893, y: 0.13459797, z: 0.036720697}
+    positiveFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    negativeFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
     m_EditorUniformFade: 4
-    m_EditorPositiveFade: {x: 0.0055847233, y: 0.0033649525, z: 0.000918017}
-    m_EditorNegativeFade: {x: 0.0055847233, y: 0.0033649525, z: 0.000918017}
+    m_EditorPositiveFade: {x: 0.0055847233, y: 0.0022825832, z: 0.000918017}
+    m_EditorNegativeFade: {x: 0.0055847233, y: 0.0022825832, z: 0.000918017}
     m_EditorAdvancedFade: 0
-    size: {x: 17.90599, y: 29.71813, z: 108.9304}
+    size: {x: 17.90599, y: 43.810066, z: 108.9304}
     invertFade: 0
     distanceFadeStart: 10000
     distanceFadeEnd: 10000
@@ -3664,11 +4010,11 @@ Transform:
   m_GameObject: {fileID: 1913723770}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.39999926, y: 1.1264982, z: -44.60075}
-  m_LocalScale: {x: 1, y: -0.5963, z: 1}
+  m_LocalPosition: {x: 37.904957, y: 4.805607, z: -51.801064}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 245555467}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &1939036816
 GameObject:
@@ -3748,7 +4094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parameters:
-    albedo: {r: 1, g: 1, b: 1, a: 1}
+    albedo: {r: 0, g: 0.026174437, b: 0.3018868, a: 1}
     meanFreePath: 5
     blendingMode: 1
     priority: 0
@@ -3756,13 +4102,13 @@ MonoBehaviour:
     volumeMask: {fileID: 0}
     textureScrollingSpeed: {x: 0, y: 0, z: 0}
     textureTiling: {x: 1, y: 1, z: 1}
-    positiveFade: {x: 0.22338893, y: 0.13459797, z: 0.036720697}
-    negativeFade: {x: 0.22338893, y: 0.13459797, z: 0.036720697}
+    positiveFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
+    negativeFade: {x: 0.24668615, y: 0.09905618, z: 0.089221485}
     m_EditorUniformFade: 4
-    m_EditorPositiveFade: {x: 0.0055847233, y: 0.003714704, z: 0.000918017}
-    m_EditorNegativeFade: {x: 0.0055847233, y: 0.003714704, z: 0.000918017}
+    m_EditorPositiveFade: {x: 0.0055847233, y: 0.003148413, z: 0.000918017}
+    m_EditorNegativeFade: {x: 0.0055847233, y: 0.003148413, z: 0.000918017}
     m_EditorAdvancedFade: 0
-    size: {x: 14.161644, y: 28.578217, z: 108.9304}
+    size: {x: 14.161644, y: 33.718452, z: 108.9304}
     invertFade: 0
     distanceFadeStart: 10000
     distanceFadeEnd: 10000
@@ -3779,12 +4125,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951414072}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.601597, y: 3.1083226, z: 0.97880936}
-  m_LocalScale: {x: 1, y: -0.5963, z: 1}
+  m_LocalRotation: {x: 0, y: -0, z: 0, w: 1}
+  m_LocalPosition: {x: 78.906555, y: 8.9881115, z: -6.2211914}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 245555467}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2129017925
 GameObject:
@@ -3918,7 +4264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5109972250767684551, guid: 4d89f127126a6f94d88a9e2639706bd9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.5
+      value: -5.9
       objectReference: {fileID: 0}
     - target: {fileID: 5109972250767684551, guid: 4d89f127126a6f94d88a9e2639706bd9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3969,10 +4315,6 @@ SceneRoots:
   - {fileID: 1272140185}
   - {fileID: 496139176}
   - {fileID: 369873498}
+  - {fileID: 245555467}
   - {fileID: 1939036818}
-  - {fileID: 1589390040}
-  - {fileID: 1951414074}
-  - {fileID: 1123287229}
-  - {fileID: 1913723772}
-  - {fileID: 1642115596}
   - {fileID: 593060826}
